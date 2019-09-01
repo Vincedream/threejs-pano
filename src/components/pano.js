@@ -14,8 +14,15 @@ export default class Pano2 extends Component {
     controls = new OrbitControls(this.camera, this.renderer.domElement);
 
     componentDidMount() {
-        console.log(this.step)
         this.initThree();
+        window.addEventListener('resize', this.onResize, false);
+    }
+
+    onResize = () => {
+        this.camera.aspect = window.innerWidth / window.innerHeight;
+        this.camera.updateProjectionMatrix();
+        this.renderer.setSize(window.innerWidth, window.innerHeight);
+        this.renderer.render(this.scene, this.camera);
     }
 
     initThree() {
