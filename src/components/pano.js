@@ -23,7 +23,7 @@ export default class Pano extends Component {
     componentDidMount() {
         this.initThree();
         this.initStats();
-        this.autoCamera();
+        // this.autoCamera();
         window.addEventListener('resize', this.onResize, false);
     }
 
@@ -60,7 +60,9 @@ export default class Pano extends Component {
         ]
         for(var i = 0; i < imgList.length; i++){
             let singleMaterial = new THREE.MeshBasicMaterial({
-                map: THREE.ImageUtils.loadTexture(imgList[i]),
+                map: THREE.ImageUtils.loadTexture(imgList[i], {}, () => {
+                    this.renderer.render(this.scene, this.camera);
+                }),
             })
             singleMaterial.side = THREE.BackSide; 
             cubeMaterial.push(singleMaterial);
